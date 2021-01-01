@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	_, err := oci.PullImage("/opt/fast_disk/Projects/mini-ct/images", "ubuntu:18.04")
+	_, err := oci.PullImage("/opt/fast_disk/Projects/mini-ct/images", "ubuntu:20.04")
 	if err != nil {
 		log.Fatal(err)
 	}
