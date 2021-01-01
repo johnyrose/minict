@@ -11,16 +11,15 @@ import (
 func RunContainer(imagesDir string, containersDir string, name string, image string) {
 	// imageName, imageTag := parseImageName(image)
 	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
-containerDir:
-	"" = containersDir + "/" + name
+	containerDir := containersDir + "/" + name
 	imageConfig := GetImageConfig(containerDir)
 	os.Chdir(containerDir)
-	cmd = buildCommand(imageConfig)
+	cmd := buildCommand(imageConfig)
 	applyNamespaces(cmd)
 	applyChroot(imageConfig)
 	err := cmd.Run()
 	if err != nil {
-		log.Fatal("Process exited with the following output: " + err)
+		log.Fatal("Process exited with the following output: " + err.Error())
 	}
 }
 
