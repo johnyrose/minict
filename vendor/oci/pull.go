@@ -4,6 +4,7 @@ import (
 	// "github.com/containers/image/copy"
 
 	"context"
+	"os"
 	"strings"
 	"sync"
 
@@ -22,7 +23,8 @@ type knownTransports struct {
 
 var kt *knownTransports
 
-func PullImage(imagesDir string, imageName string, imageTag string) {
+func PullImage(imagesDir string, imageName string, imageTag string) ([]byte, error) {
+	os.Chdir(imagesDir)
 	ctx := context.Background()
 	policyContext, err := getPolicyContext()
 	if err != nil {
@@ -32,11 +34,11 @@ func PullImage(imagesDir string, imageName string, imageTag string) {
 	if err != nil {
 		log.Fatal("Invalid image name")
 	}
-	destRef, err := ParseImageName(imageName + "-new" + ":" + imageTag)
+	destRef, err := ParseImageName("oci:test:latest" + ":" + imageTag)
 	if err != nil {
 		log.Fatal("Failed to set destination name")
 	}
-	copy.Image(ctx, policyContext, destRef, srcRef, &copy.Options{})
+	return copy.Image(ctx, policyContext, destRef, srcRef, &copy.Options{})
 }
 
 // ParseImageName converts a URL-like image name to a types.ImageReference. This function is taken from Skopeo.
