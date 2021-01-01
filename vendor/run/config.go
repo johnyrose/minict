@@ -8,10 +8,10 @@ import (
 )
 
 type ImageConfig struct {
-	OciVersion    string        `json:"ociVersion"`
-	ProcessConfig ProcessConfig `json:"process"`
-	Hostname      string        `json:"hostname"`
-	MountsConfig  MountsConfig  `json:"mounts"`
+	OciVersion    string         `json:"ociVersion"`
+	ProcessConfig ProcessConfig  `json:"process"`
+	Hostname      string         `json:"hostname"`
+	MountsConfig  []MountsConfig `json:"mounts"`
 }
 
 type ProcessConfig struct {
