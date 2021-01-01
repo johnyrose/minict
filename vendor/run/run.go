@@ -21,6 +21,7 @@ func RunContainer(imagesDir string, containersDir string, name string, image str
 	if err != nil {
 		log.Fatal("Process exited with the following output: " + err.Error())
 	}
+	// TODO: Unmount the /proc folder that was created once the container exits, even if it exits with an error.
 }
 
 func parseImageName(name string) (string, string) {
