@@ -12,10 +12,12 @@ import (
 func RunContainer(imagesDir string, containersDir string, name string, image string) {
 	// imageName, imageTag := parseImageName(image)
 	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
-	imageConfig := GetImageConfig(containersDir + "/" + name)
+	containerDir :""= containersDir + "/" + name
+	imageConfig := GetImageConfig(containerDir)
+	os.Chdir(containerDir)
 	cmd = buildCommand(imageConfig)
 	applyNamespaces(cmd)
-	fmt.Print(imageConfig)
+	
 }
 
 func parseImageName(name string) (string, string) {
