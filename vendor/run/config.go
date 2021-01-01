@@ -10,10 +10,15 @@ import (
 type ImageConfig struct {
 	OciVersion    string        `json:"ociVersion"`
 	ProcessConfig ProcessConfig `json:"process"`
+	Hostname      string        `json:"hostname"`
 }
 
 type ProcessConfig struct {
-	Cwd string `json:"cwd"`
+	Terminal bool           `json:"terminal"`
+	User     map[string]int `json:"user"`
+	Args     []string       `json:"args"`
+	Env      []string       `json:"env"`
+	Cwd      string         `json:"cwd"`
 }
 
 func GetImageConfig(imageDir string) ImageConfig {
