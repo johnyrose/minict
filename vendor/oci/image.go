@@ -10,7 +10,7 @@ import (
 	"github.com/simonz05/util/log"
 )
 
-func UnpackImage(imagesDir string, containersDir string, containerName string, imageName string, imageTag string) {
+func UnpackImage(imagesDir string, containersDir string, containerName string, imageName string, imageTag string) error {
 	os.Chdir(imagesDir)
 	engine, err := dir.Open(imageName)
 	if err != nil {
@@ -23,5 +23,5 @@ func UnpackImage(imagesDir string, containersDir string, containerName string, i
 	meta.MapOptions.Rootless = true
 	unpackOptions.MapOptions = meta.MapOptions
 	fullContainerPath := containersDir + "/" + containerName
-	umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
+	return umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
 }
