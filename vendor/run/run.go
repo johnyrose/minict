@@ -17,7 +17,11 @@ func RunContainer(imagesDir string, containersDir string, name string, image str
 	os.Chdir(containerDir)
 	cmd = buildCommand(imageConfig)
 	applyNamespaces(cmd)
-	
+	applyChroot(imageConfig)
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal("Process exited with the following output: "  err)
+	}
 }
 
 func parseImageName(name string) (string, string) {
@@ -41,4 +45,10 @@ func applyNamespaces(cmd *exec.Cmd) {
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS
 	}
+}
+
+func applyChroot(imageConfig ImageConfig) {
+	// syscall.Mount("rootfs", "rootfs", "", syscall.MS_BIND, "")
+	syscall.Chroot("rootfs")
+	os.Chdir(imageConfig.ProcessConfig.Cwd)
 }
