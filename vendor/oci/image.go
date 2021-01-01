@@ -21,6 +21,7 @@ func UnpackImage(imagesDir string, containersDir string, containerName string, i
 	var meta umoci.Meta
 	meta.Version = umoci.MetaVersion
 	meta.MapOptions.Rootless = true
+	// TODO: Check why adding rootless doesn't work.
 	unpackOptions.MapOptions = meta.MapOptions
 	fullContainerPath := containersDir + "/" + containerName
 	return umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
