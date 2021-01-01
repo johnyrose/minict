@@ -5,7 +5,6 @@ import (
 
 	"context"
 	"os"
-	"strings"
 	"sync"
 
 	"github.com/apex/log"
@@ -13,7 +12,6 @@ import (
 	"github.com/containers/image/signature"
 	"github.com/containers/image/transports"
 	"github.com/containers/image/types"
-	"github.com/pkg/errors"
 )
 
 type knownTransports struct {
@@ -23,18 +21,18 @@ type knownTransports struct {
 
 var kt *knownTransports
 
-func PullImage(imagesDir string, imageName string, imageTag string) ([]byte, error) {
+func PullImage(imagesDir string, image string) ([]byte, error) {
 	os.Chdir(imagesDir)
 	ctx := context.Background()
 	policyContext, err := getPolicyContext()
 	if err != nil {
 		log.Fatal("Failed to get policy context")
 	}
-	srcRef, err := ParseImageName(imageName + ":" + imageTag)
+	srcRef, err := ParseImageName(image, "docker")
 	if err != nil {
 		log.Fatal("Invalid image name")
 	}
-	destRef, err := ParseImageName("oci:test:latest" + ":" + imageTag)
+	destRef, err := ParseImageName(image, "oci")
 	if err != nil {
 		log.Fatal("Failed to set destination name")
 	}
@@ -42,17 +40,15 @@ func PullImage(imagesDir string, imageName string, imageTag string) ([]byte, err
 }
 
 // ParseImageName converts a URL-like image name to a types.ImageReference. This function is taken from Skopeo.
-func ParseImageName(imgName string) (types.ImageReference, error) {
-	// Keep this in sync with TransportFromImageName!
-	parts := strings.SplitN(imgName, ":", 2)
-	if len(parts) != 2 {
-		return nil, errors.Errorf(`Invalid image name "%s", expected colon-separated transport:reference`, imgName)
-	}
-	transport := transports.Get(parts[0])
+func ParseImageName(imgName string, transportType string) (types.ImageReference, error) {
+	transport := transports.Get(transportType)
 	if transport == nil {
-		return nil, errors.Errorf(`Invalid image name "%s", unknown transport "%s"`, imgName, parts[0])
+		log.Fatal("Failed to get image transport type.")
 	}
-	return transport.ParseReference(parts[1])
+	if transportType == "docker" {
+		imgName = "//" + imgName
+	}
+	return transport.ParseReference(imgName)
 }
 
 func getPolicyContext() (*signature.PolicyContext, error) {
