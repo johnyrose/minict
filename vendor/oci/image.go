@@ -1,30 +1,27 @@
 package oci
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"os"
 
-	v1 "github.com/opencontainers/image-spec/specs-go/v1"
+	"github.com/opencontainers/umoci"
+	"github.com/opencontainers/umoci/oci/cas/dir"
+	"github.com/opencontainers/umoci/oci/casext"
+	"github.com/opencontainers/umoci/oci/layer"
+	"github.com/simonz05/util/log"
 )
 
-type Image struct {
-	Layers      []string
-	ImageConfig v1.Image
-}
-
-type Manifest struct {
-	ConfigFile string   `json:"Config,omitempty"`
-	Layers     []string `json:"Layers,omitempty"`
-}
-
-func GetImageObject(imageDir string) Image {
-	manifestFile, _ := ioutil.ReadFile(imageDir + "/manifest.json")
-	manifest := Manifest{}
-	_ = json.Unmarshall([]byte(manifestFile), &manifest)
-	image := v1.Image{}
-	_ = json.Unmarshall([]byte(manifest.ConfigFile), &image)
-	return Image{
-		Layers:      manifest.Layers,
-		ImageConfig: image,
+func UnpackImage(imagesDir string, containersDir string, containerName string, imageName string, imageTag string) {
+	os.Chdir(imagesDir)
+	engine, err := dir.Open(imageName)
+	if err != nil {
+		log.Fatal(err)
 	}
+	engineExt := casext.NewEngine(engine)
+	var unpackOptions layer.UnpackOptions
+	var meta umoci.Meta
+	meta.Version = umoci.MetaVersion
+	meta.MapOptions.Rootless = true
+	unpackOptions.MapOptions = meta.MapOptions
+	fullContainerPath := containersDir + "/" + containerName
+	umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
 }

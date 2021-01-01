@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"oci"
 )
 
 func main() {
-	fmt.Println("hi")
+	oci.UnpackImage("/opt/fast_disk/Projects/mini-ct/images", "/opt/fast_disk/Projects/mini-ct/containers", "test", "ubuntu", "latest")
 }
