@@ -3,6 +3,8 @@ package run
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -19,4 +21,13 @@ func parseImageName(name string) (string, string) {
 		log.Fatal("Invalid image name")
 	}
 	return split[0], split[1]
+}
+
+func buildCommand(imageConfig ImageConfig) *exec.Cmd {
+	cmd := exec.Command(imageConfig.ProcessConfig.Args[0], imageConfig.ProcessConfig.Args[1:]...)
+	// TODO: Add env variables and changing of working directory
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd
 }
