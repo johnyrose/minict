@@ -38,6 +38,7 @@ func buildCommand(imageConfig ImageConfig) *exec.Cmd {
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+	cmd.Env = imageConfig.ProcessConfig.Env
 	return cmd
 }
 
