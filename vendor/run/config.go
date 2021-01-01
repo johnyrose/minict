@@ -11,6 +11,7 @@ type ImageConfig struct {
 	OciVersion    string        `json:"ociVersion"`
 	ProcessConfig ProcessConfig `json:"process"`
 	Hostname      string        `json:"hostname"`
+	MountsConfig  MountsConfig  `json:"mounts"`
 }
 
 type ProcessConfig struct {
@@ -19,6 +20,13 @@ type ProcessConfig struct {
 	Args     []string       `json:"args"`
 	Env      []string       `json:"env"`
 	Cwd      string         `json:"cwd"`
+}
+
+type MountsConfig struct {
+	Destination string   `json:"destination"`
+	Source      string   `json:"source"`
+	Type        string   `json:"type"`
+	Options     []string `json:"options,omitempty"`
 }
 
 func GetImageConfig(imageDir string) ImageConfig {
