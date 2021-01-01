@@ -6,12 +6,15 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 )
 
 func RunContainer(imagesDir string, containersDir string, name string, image string) {
 	// imageName, imageTag := parseImageName(image)
 	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
 	imageConfig := GetImageConfig(containersDir + "/" + name)
+	cmd = buildCommand(imageConfig)
+	applyNamespaces(cmd)
 	fmt.Print(imageConfig)
 }
 
@@ -30,4 +33,10 @@ func buildCommand(imageConfig ImageConfig) *exec.Cmd {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd
+}
+
+func applyNamespaces(cmd *exec.Cmd) {
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS
+	}
 }
