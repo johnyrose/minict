@@ -1,6 +1,9 @@
 package cli
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 type AppConfig struct {
 	ContainersDir string
@@ -9,8 +12,8 @@ type AppConfig struct {
 
 func GetAppConfig() AppConfig {
 	config := AppConfig{
-		ContainersDir: getenv("MINICT_CONTAINERS_DIR", "/var/lib/minict/containers"),
-		ImagesDir:     getenv("MINICT_IMAGES_DIR", "/var/lib/minict/images"),
+		ContainersDir: fmt.Sprintf("%s/containers", getenv("MINICT_DIR", "/var/lib/minict")),
+		ImagesDir:     fmt.Sprintf("%s/images", getenv("MINICT_DIR", "/var/lib/minict")),
 	}
 	return config
 }
