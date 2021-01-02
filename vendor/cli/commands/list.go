@@ -1,8 +1,10 @@
 package commands
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
+	"oci"
 )
 
 func ListContainers(containersDir string) []string {
@@ -17,4 +19,13 @@ func ListContainers(containersDir string) []string {
 		}
 	}
 	return containers
+}
+
+func ListImages(imagesDir string) []string {
+	var images []string
+	manifests := oci.ListManifests(imagesDir)
+	for _, manifest := range manifests {
+		images = append(images, fmt.Sprintf("%s:%s", manifest.Name, manifest.Annotations.Tag))
+	}
+	return images
 }

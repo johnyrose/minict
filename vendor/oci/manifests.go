@@ -10,11 +10,12 @@ import (
 )
 
 type ManifestConfig struct {
-	schemaVersion int        `json:"schemaVersion"`
-	manifests     []Manifest `json:"manifests"`
+	SchemaVersion int        `json:"schemaVersion"`
+	Manifests     []Manifest `json:"manifests"`
 }
 
 type Manifest struct {
+	Name        string
 	MediaType   string              `json:"mediaType"`
 	Digest      string              `json:"digest"`
 	Size        int                 `json:"size"`
@@ -34,7 +35,8 @@ func ListManifests(imagesDir string) []Manifest {
 	for _, file := range files {
 		if file.IsDir() {
 			manifestConfig := readManifest(fmt.Sprintf("%s/%s", imagesDir, file.Name()))
-			for _, manifest := range manifestConfig.manifests {
+			for _, manifest := range manifestConfig.Manifests {
+				manifest.Name = file.Name()
 				manifests = append(manifests, manifest)
 			}
 		}

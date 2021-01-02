@@ -66,6 +66,18 @@ func GetCli() *cli.App {
 					return err
 				},
 			},
+			{
+				Name:  "list-images",
+				Usage: "List images that were downloaded/added.",
+				Action: func(c *cli.Context) error {
+					images := commands.ListImages(config.ImagesDir)
+					b, err := json.MarshalIndent(images, "", "	")
+					if err == nil {
+						fmt.Println(string(b))
+					}
+					return err
+				},
+			},
 		},
 	}
 	return app
