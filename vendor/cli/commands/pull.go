@@ -10,6 +10,6 @@ import (
 func Pull(imagesDir string, image string) {
 	_, err := oci.PullImage(imagesDir, image)
 	if err != nil {
-		log.Error(fmt.Sprintf("Failed to pull image. Error received: %s", err.Error()))
+		log.Fatal(fmt.Sprintf("Failed to pull image. Error received: %s", err.Error()))
 	}
 }

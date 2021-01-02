@@ -13,6 +13,6 @@ func Start(containerDir string, name string) {
 	}
 	err := run.RunContainer(containerDir, name)
 	if err != nil {
-		log.Error(fmt.Sprintf("Failed to run image. Error received: %s", err.Error()))
+		log.Fatal(fmt.Sprintf("Failed to run image. Error received: %s", err.Error()))
 	}
 }
