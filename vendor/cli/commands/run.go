@@ -11,11 +11,13 @@ import (
 
 func Run(imagesDir string, containerDir string, image string, name string) {
 	imageName, imageTag := parseImageName(image)
-	err := oci.UnpackImage(imagesDir, containerDir, name, imageName, imageTag)
-	if err != nil {
-		log.Error(fmt.Sprintf("Failed to unpack image. Error received: %s", err.Error()))
+	if !doesContainerExist(name, containerDir) {
+		err := oci.UnpackImage(imagesDir, containerDir, name, imageName, imageTag)
+		if err != nil {
+			log.Error(fmt.Sprintf("Failed to unpack image. Error received: %s", err.Error()))
+		}
 	}
-	err = run.RunContainer(imagesDir, containerDir, name)
+	err := run.RunContainer(imagesDir, containerDir, name)
 	if err != nil {
 		log.Error(fmt.Sprintf("Failed to run image. Error received: %s", err.Error()))
 	}
@@ -27,4 +29,13 @@ func parseImageName(name string) (string, string) {
 		log.Fatal("Invalid image name")
 	}
 	return split[0], split[1]
+}
+
+func doesContainerExist(name string, containerDir string) bool {
+	for _, container := range listContainers(containerDir) {
+		if name == container {
+			return true
+		}
+	}
+	return false
 }
