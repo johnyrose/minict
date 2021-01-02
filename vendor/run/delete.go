@@ -8,7 +8,7 @@ import (
 	"github.com/apex/log"
 )
 
-func RemoveContainer(imagesDir string, containersDir string, name string) {
+func DeleteContainer(containersDir string, name string) {
 	containerDir := fmt.Sprintf("%s/%s", containersDir, name)
 	imageConfig := GetImageConfig(containerDir)
 	unmountAll(containerDir, imageConfig)

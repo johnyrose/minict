@@ -55,6 +55,21 @@ func GetCli() *cli.App {
 				},
 			},
 			{
+				Name:  "rm",
+				Usage: "Remove an existing container.",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "name",
+						Usage:    "The name of the container",
+						Required: true,
+					},
+				},
+				Action: func(c *cli.Context) error {
+					commands.RemoveContainer(config.ContainersDir, c.String("name"))
+					return nil
+				},
+			},
+			{
 				Name:  "list-containers",
 				Usage: "List containers that are running or can be ran have been ran.",
 				Action: func(c *cli.Context) error {
