@@ -53,7 +53,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.Run(config.ImagesDir, config.ContainersDir, c.String("image"), c.String("name"))
-					log.Info("Container process exited. It can be stated again using the 'start' option.")
+					log.Info("Container process exited. It can be started again using the 'start' option.")
 					return nil
 				},
 			},
@@ -69,7 +69,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.Start(config.ContainersDir, c.String("name"))
-					log.Info("Container process exited. It can be stated again using the 'start' option.")
+					log.Info("Container process exited. It can be started again using the 'start' option.")
 					return nil
 				},
 			},
