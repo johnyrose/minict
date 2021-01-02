@@ -54,15 +54,7 @@ func applyChroot(imageConfig ImageConfig) {
 		var mountFlag uintptr
 		if mount.Type == "bind" {
 			mountFlag = syscall.MS_BIND
-			sourceFile, _ := os.Stat(mount.Source)
-			if sourceFile.IsDir() {
-				os.MkdirAll("rootfs"+mount.Destination, os.ModePerm)
-			} else {
-				filenameSplit := strings.Split(mount.Destination, "/")
-				filenameSplit = filenameSplit[:len(filenameSplit)-1]
-				os.MkdirAll("rootfs/"+strings.Join(filenameSplit, "/"), os.ModePerm)
-				os.Create("rootfs" + mount.Destination)
-			}
+			prepareBindMount(mount)
 		} else {
 			mountFlag = 0
 		}
@@ -74,6 +66,18 @@ func applyChroot(imageConfig ImageConfig) {
 	}
 	syscall.Chroot("rootfs")
 	os.Chdir(imageConfig.ProcessConfig.Cwd)
+}
+
+func prepareBindMount(mount MountsConfig) {
+	sourceFile, _ := os.Stat(mount.Source)
+	if sourceFile.IsDir() {
+		os.MkdirAll("rootfs"+mount.Destination, os.ModePerm)
+	} else {
+		filenameSplit := strings.Split(mount.Destination, "/")
+		filenameSplit = filenameSplit[:len(filenameSplit)-1]
+		os.MkdirAll("rootfs/"+strings.Join(filenameSplit, "/"), os.ModePerm)
+		os.Create("rootfs" + mount.Destination)
+	}
 }
 
 func applyUsers(imageConfig ImageConfig) {
