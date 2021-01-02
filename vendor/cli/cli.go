@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/apex/log"
 	"github.com/urfave/cli"
 )
 
@@ -31,6 +32,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.Pull(config.ImagesDir, c.String("image"))
+					log.Info("Image pulled successfully.")
 					return nil
 				},
 			},
@@ -51,6 +53,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.Run(config.ImagesDir, config.ContainersDir, c.String("image"), c.String("name"))
+					log.Info("Container process exited.")
 					return nil
 				},
 			},
@@ -66,6 +69,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.RemoveContainer(config.ContainersDir, c.String("name"))
+					log.Info("Container removed successfully.")
 					return nil
 				},
 			},
