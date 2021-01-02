@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func RunContainer(imagesDir string, containersDir string, name string, image string) error {
+func RunContainer(imagesDir string, containersDir string, name string) error {
 	// imageName, imageTag := parseImageName(image)
 	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
 	containerDir := containersDir + "/" + name
