@@ -58,6 +58,9 @@ func applyChroot(imageConfig ImageConfig) {
 			if sourceFile.IsDir() {
 				os.MkdirAll(fmt.Sprintf("rootfs%s", mount.Destination), os.ModePerm)
 			} else {
+				filenameSplit := strings.Split(mount.Destination, "/")
+				filenameSplit = filenameSplit[:len(filenameSplit)-1]
+				os.MkdirAll(fmt.Sprintf("rootfs%s", strings.Join(filenameSplit, "/")), os.ModePerm)
 				os.Create(fmt.Sprintf("rootfs%s", mount.Destination))
 			}
 		} else {
