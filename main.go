@@ -1,9 +1,10 @@
 package main
 
 import (
-	"cli"
 	"log"
 	"os"
+
+	"github.com/Ripolak/minict/cli"
 
 	_ "github.com/containers/image/docker"
 	_ "github.com/containers/image/oci/layout"

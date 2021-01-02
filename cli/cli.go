@@ -1,10 +1,11 @@
 package cli
 
 import (
-	"cli/commands"
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/Ripolak/minict/cli/commands"
 
 	"github.com/apex/log"
 	"github.com/urfave/cli"
