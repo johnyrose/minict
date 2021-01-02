@@ -16,6 +16,7 @@ func RunContainer(containersDir string, name string) error {
 	cmd := buildCommand(imageConfig)
 	applyNamespaces(cmd)
 	applyChroot(imageConfig)
+	applyUsers(imageConfig)
 	err := cmd.Run()
 	return err
 }
@@ -43,9 +44,10 @@ func applyNamespaces(cmd *exec.Cmd) {
 			syscall.CLONE_NEWPID |
 			syscall.CLONE_NEWNS |
 			syscall.CLONE_NEWIPC |
-			syscall.CLONE_NEWNET |
-			syscall.CLONE_NEWUSER,
+			syscall.CLONE_NEWNET,
+		// syscall.CLONE_NEWUSER,
 	}
+	// TODO: Add the syscall.CLONE_NEWUSER when user support is added.
 }
 
 func applyChroot(imageConfig ImageConfig) {
@@ -64,4 +66,9 @@ func applyChroot(imageConfig ImageConfig) {
 		// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
 	}
 	os.Chdir(imageConfig.ProcessConfig.Cwd)
+}
+
+func applyUsers(imageConfig ImageConfig) {
+	syscall.Setuid(imageConfig.ProcessConfig.User["uid"])
+	syscall.Setgid(imageConfig.ProcessConfig.User["gid"])
 }
