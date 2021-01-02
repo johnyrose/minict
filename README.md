@@ -46,12 +46,9 @@ Minict runs OCI standard images and supports pulling images from existing regist
   >>> sudo minictl list-containers
   
   [
-	"test2",
-	"test3",
-	"test5",
-	"test6",
-	"ub1",
-	"ub2",
+	"container1",
+	"container2",
+	"alpine-ctr",
 	"ubuntu-ctr"
 ]
   ```
