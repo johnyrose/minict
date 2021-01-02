@@ -12,6 +12,9 @@ Minict runs OCI standard images and supports pulling images from existing regist
    * Run `sudo apt install libgpgme-dev` on Debian-based distros (Debian, Ubuntu, etc.)
  * Have `golang` and `git` installed.
 
+## Usage
+ * Either download the current binary from the releases page, or compile with the instuctions below.
+ * Once you have the executable, start using it with the help of the `Getting started` section below or by running the executable with the `--help` or `-h` flag.
 ## Building & Running
  * Clone this repository into your `$HOME/go/src` directory and run `cd $HOME/go/src/minict`
  * Run the `go get` command.
