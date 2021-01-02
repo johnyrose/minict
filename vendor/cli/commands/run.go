@@ -15,7 +15,10 @@ func Run(imagesDir string, containerDir string, image string, name string) {
 	if err != nil {
 		log.Error(fmt.Sprintf("Failed to unpack image. Error received: %s", err.Error()))
 	}
-	run.RunContainer(imagesDir, containerDir, name, image)
+	err = run.RunContainer(imagesDir, containerDir, name, image)
+	if err != nil {
+		log.Error(fmt.Sprintf("Failed to run image. Error received: %s", err.Error()))
+	}
 }
 
 func parseImageName(name string) (string, string) {

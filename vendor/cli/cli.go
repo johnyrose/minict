@@ -2,7 +2,6 @@ package cli
 
 import (
 	"cli/commands"
-	"fmt"
 
 	"github.com/urfave/cli"
 )
@@ -35,9 +34,14 @@ func GetCli() *cli.App {
 						Usage:    "The full image name",
 						Required: true,
 					},
+					&cli.StringFlag{
+						Name:     "name",
+						Usage:    "The name of the container",
+						Required: true,
+					},
 				},
 				Action: func(c *cli.Context) error {
-					fmt.Println("test run " + c.Args().First())
+					commands.Run(config.ImagesDir, config.ContainersDir, c.String("image"), c.String("name"))
 					return nil
 				},
 			},

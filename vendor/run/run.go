@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func RunContainer(imagesDir string, containersDir string, name string, image string) {
+func RunContainer(imagesDir string, containersDir string, name string, image string) error {
 	// imageName, imageTag := parseImageName(image)
 	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
 	containerDir := containersDir + "/" + name
@@ -18,9 +18,7 @@ func RunContainer(imagesDir string, containersDir string, name string, image str
 	applyNamespaces(cmd)
 	applyChroot(imageConfig)
 	err := cmd.Run()
-	if err != nil {
-		log.Fatal("Process exited with the following output: " + err.Error())
-	}
+	return err
 	// TODO: Unmount the /proc folder that was created once the container exits, even if it exits with an error.
 }
 
