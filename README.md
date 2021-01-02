@@ -1,6 +1,6 @@
 # Minict
 
-Minict is a small and minimal container runtime written in Go. It was made mainly for learning purposes and is intended to be as simple as possible. 
+Minict is a minimal container runtime written in Go. It was made mainly for learning purposes and is intended to be as simple as possible. 
 
 It's main intention is to be easily understandable to anyone who wishes to read it's code and see what goes into running containers in famous runtimes such as Containerd and full container-running platforms like Docker.
 
@@ -59,3 +59,15 @@ Minict runs OCI standard images and supports pulling images from existing regist
   ```bash
   sudo minict rm --name ubuntu-ctr
   ```
+
+
+## Important Notes & Disclaimers:
+ * Since this is intended to be small and minimal project, only basic OCI settings are supported. Currently, minict supports the following features:
+   * Cmd / Entrypoint
+   * Env variables
+   * Mounts - Partial support, some mounts won't work and you might see mounting error when starting containers, but the basic mounts that are required for most containers are supported.
+   * Hostname
+* All other OCI settings are ignored.
+* Currently, containers do not start with a networking namespace. I intend to add it in the near future.
+* **Minict is in NO way meant to be used in production.** This is nothing more than a personal project and I take no responsibility for anything that using it might cause.
+* While I tested this on my personal system and tried my best to cleanup everything once a container is removed, note that it does setup namespaces and mounts on the system, so **for completely risk-free usage I'd suggest using it on a VM**.
