@@ -1,6 +1,7 @@
 package run
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -9,9 +10,7 @@ import (
 )
 
 func RunContainer(imagesDir string, containersDir string, name string) error {
-	// imageName, imageTag := parseImageName(image)
-	// oci.UnpackImage(imagesDir, containersDir, name, imageName, imageTag)
-	containerDir := containersDir + "/" + name
+	containerDir := fmt.Sprintf("%s/%s", containersDir, name)
 	imageConfig := GetImageConfig(containerDir)
 	os.Chdir(containerDir)
 	cmd := buildCommand(imageConfig)

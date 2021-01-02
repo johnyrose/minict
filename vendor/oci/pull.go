@@ -4,6 +4,7 @@ import (
 	// "github.com/containers/image/copy"
 
 	"context"
+	"fmt"
 	"os"
 	"sync"
 
@@ -46,7 +47,7 @@ func ParseImageName(imgName string, transportType string) (types.ImageReference,
 		log.Fatal("Failed to get image transport type.")
 	}
 	if transportType == "docker" {
-		imgName = "//" + imgName
+		imgName = fmt.Sprintf("//%s", imgName)
 	}
 	return transport.ParseReference(imgName)
 }

@@ -1,6 +1,7 @@
 package oci
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/opencontainers/umoci"
@@ -23,6 +24,6 @@ func UnpackImage(imagesDir string, containersDir string, containerName string, i
 	meta.MapOptions.Rootless = true
 	// TODO: Check why adding rootless doesn't work.
 	unpackOptions.MapOptions = meta.MapOptions
-	fullContainerPath := containersDir + "/" + containerName
+	fullContainerPath := fmt.Sprintf("%s/%s", containersDir, containerName)
 	return umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
 }

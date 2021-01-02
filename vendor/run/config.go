@@ -2,6 +2,7 @@ package run
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -30,7 +31,7 @@ type MountsConfig struct {
 }
 
 func GetImageConfig(imageDir string) ImageConfig {
-	configFile, err := os.Open(imageDir + "/config.json")
+	configFile, err := os.Open(fmt.Sprintf("%s/config.json", imageDir))
 	if err != nil {
 		log.Fatal(err)
 	}
