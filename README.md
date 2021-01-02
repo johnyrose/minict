@@ -18,3 +18,44 @@ Minict runs OCI standard images and supports pulling images from existing regist
  * Run the `go build` command.
  * You should now have a `minict` executable in your directory. Run `chmod a+x minict` and it can now be used.
  * To use it from anywhere easily, move the `minict` executable to a directory that is in yout `PATH` variable. One such directory should be `/usr/bin`.
+
+ ## Getting Started
+  * Pulling an image:
+  ```bash
+  sudo minict pull --image ubuntu:20.04
+  ```
+  * Running a new container:
+  ```bash
+  sudo minict run --image ubuntu:20.04 --name ubuntu-ctr
+  ```
+  * Starting an existing container:
+  ```bash
+  sudo minict start --name ubuntu-ctr
+  ```
+  * Listing all images:
+  ```bash
+  >>> sudo minictl list-images
+
+  [
+	"alpine:latest",
+	"ubuntu:20.04"
+  ]
+  ```
+  * Listing all containers:
+  ```bash
+  >>> sudo minictl list-containers
+  
+  [
+	"test2",
+	"test3",
+	"test5",
+	"test6",
+	"ub1",
+	"ub2",
+	"ubuntu-ctr"
+]
+  ```
+  * Removing an existing container:
+  ```bash
+  sudo minict rm --name ubuntu-ctr
+  ```
