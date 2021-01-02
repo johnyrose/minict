@@ -62,7 +62,10 @@ Minict runs OCI standard images and supports pulling images from existing regist
 
 ## Running information
  * Container management is entirely based on the filesystem, and no DBs or separate inventories are used.
- * By default, minict will use the `/var/lib/minict` directory for everything that it stores on disk. 
+ * By default, minict will use the `/var/lib/minict` directory for everything that it stores on disk. This can be changed by setting the `MINICT_DIR` environment variable to a new location. For example:
+ ```bash
+ sudo MINICT_DIR=/new/location minict pull --image alpine:3.11
+ ```
 
 ## Important Notes & Disclaimers:
  * Since this is intended to be small and minimal project, only basic OCI settings are supported. Currently, minict supports the following features:
