@@ -45,7 +45,6 @@ func applyNamespaces(cmd *exec.Cmd) {
 			syscall.CLONE_NEWNS |
 			syscall.CLONE_NEWIPC |
 			syscall.CLONE_NEWNET,
-		// syscall.CLONE_NEWUSER,
 	}
 	// TODO: Add the syscall.CLONE_NEWUSER when user support is added.
 }
