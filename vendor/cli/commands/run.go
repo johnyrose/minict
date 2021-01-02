@@ -18,7 +18,7 @@ func Run(imagesDir string, containerDir string, image string, name string) {
 	if err != nil {
 		log.Error(fmt.Sprintf("Failed to unpack image. Error received: %s", err.Error()))
 	}
-	err = run.RunContainer(imagesDir, containerDir, name)
+	err = run.RunContainer(containerDir, name)
 	if err != nil {
 		log.Error(fmt.Sprintf("Failed to run image. Error received: %s", err.Error()))
 	}

@@ -38,7 +38,7 @@ func GetCli() *cli.App {
 			},
 			{
 				Name:  "run",
-				Usage: "Run a container.",
+				Usage: "Run a new container.",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:     "image",
@@ -53,6 +53,22 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.Run(config.ImagesDir, config.ContainersDir, c.String("image"), c.String("name"))
+					log.Info("Container process exited.")
+					return nil
+				},
+			},
+			{
+				Name:  "start",
+				Usage: "Start an existing container that was exited.",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "name",
+						Usage:    "The name of the container",
+						Required: true,
+					},
+				},
+				Action: func(c *cli.Context) error {
+					commands.Start(config.ContainersDir, c.String("name"))
 					log.Info("Container process exited.")
 					return nil
 				},
@@ -75,7 +91,7 @@ func GetCli() *cli.App {
 			},
 			{
 				Name:  "list-containers",
-				Usage: "List containers that are running or can be ran have been ran.",
+				Usage: "List all current containers.",
 				Action: func(c *cli.Context) error {
 					containers := commands.ListContainers(config.ContainersDir)
 					b, err := json.MarshalIndent(containers, "", "	")
@@ -87,7 +103,7 @@ func GetCli() *cli.App {
 			},
 			{
 				Name:  "list-images",
-				Usage: "List images that were downloaded/added.",
+				Usage: "List all images.",
 				Action: func(c *cli.Context) error {
 					images := commands.ListImages(config.ImagesDir)
 					b, err := json.MarshalIndent(images, "", "	")

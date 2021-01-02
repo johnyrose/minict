@@ -9,7 +9,7 @@ import (
 	"syscall"
 )
 
-func RunContainer(imagesDir string, containersDir string, name string) error {
+func RunContainer(containersDir string, name string) error {
 	containerDir := fmt.Sprintf("%s/%s", containersDir, name)
 	imageConfig := GetImageConfig(containerDir)
 	os.Chdir(containerDir)
@@ -18,7 +18,6 @@ func RunContainer(imagesDir string, containersDir string, name string) error {
 	applyChroot(imageConfig)
 	err := cmd.Run()
 	return err
-	// TODO: Unmount the /proc folder that was created once the container exits, even if it exits with an error.
 }
 
 func parseImageName(name string) (string, string) {
@@ -31,7 +30,6 @@ func parseImageName(name string) (string, string) {
 
 func buildCommand(imageConfig ImageConfig) *exec.Cmd {
 	cmd := exec.Command(imageConfig.ProcessConfig.Args[0], imageConfig.ProcessConfig.Args[1:]...)
-	// TODO: Add env variables and changing of working directory
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
