@@ -19,6 +19,9 @@ func GetCli() *cli.App {
 	config := GetAppConfig()
 	initFolders(config)
 	app := &cli.App{
+		Name:      "minict",
+		Usage:     "A minimal, easy-to-understand container runtime.",
+		UsageText: "minict <command> [command flags]",
 		Commands: []*cli.Command{
 			{
 				Name:  "pull",
