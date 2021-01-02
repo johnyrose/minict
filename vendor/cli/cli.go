@@ -1,12 +1,14 @@
 package cli
 
 import (
+	"cli/commands"
 	"fmt"
 
 	"github.com/urfave/cli"
 )
 
 func GetCli() *cli.App {
+	config := GetAppConfig()
 	app := &cli.App{
 		Commands: []*cli.Command{
 			{
@@ -20,7 +22,7 @@ func GetCli() *cli.App {
 					},
 				},
 				Action: func(c *cli.Context) error {
-					fmt.Println("test pull " + c.String("image"))
+					commands.Pull(config.ImagesDir, c.String("image"))
 					return nil
 				},
 			},
