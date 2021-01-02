@@ -39,7 +39,12 @@ func buildCommand(imageConfig ImageConfig) *exec.Cmd {
 
 func applyNamespaces(cmd *exec.Cmd) {
 	cmd.SysProcAttr = &syscall.SysProcAttr{
-		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS,
+		Cloneflags: syscall.CLONE_NEWUTS |
+			syscall.CLONE_NEWPID |
+			syscall.CLONE_NEWNS |
+			syscall.CLONE_NEWIPC |
+			syscall.CLONE_NEWNET |
+			syscall.CLONE_NEWUSER,
 	}
 }
 
