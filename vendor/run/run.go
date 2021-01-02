@@ -47,20 +47,18 @@ func applyNamespaces(cmd *exec.Cmd) {
 
 func applyChroot(imageConfig ImageConfig) {
 	syscall.Chroot("rootfs")
-	// for _, mount := range imageConfig.MountsConfig {
-	// 	var mountFlag uintptr
-	// 	if mount.Type == "bind" {
-	// 		mountFlag = syscall.MS_BIND
-	// 	} else {
-	// 		mountFlag = 0
-	// 	}
-	// 	err := syscall.Mount(mount.Source, mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
-	// 	if err != nil {
-	// 		log.Print(("Failed to mount " + mount.Source + " to " + mount.Destination + " due to " + err.Error()))
-	// 	}
-	// 	// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
-	// }
-
-	// TODO: Return the mounts when all were confirmed to work without possibility to damage the system
+	for _, mount := range imageConfig.MountsConfig {
+		var mountFlag uintptr
+		if mount.Type == "bind" {
+			mountFlag = syscall.MS_BIND
+		} else {
+			mountFlag = 0
+		}
+		err := syscall.Mount(mount.Source, mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
+		if err != nil {
+			log.Print(("Failed to mount " + mount.Source + " to " + mount.Destination + " due to " + err.Error()))
+		}
+		// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
+	}
 	os.Chdir(imageConfig.ProcessConfig.Cwd)
 }
