@@ -43,10 +43,10 @@ func applyNamespaces(cmd *exec.Cmd) {
 		Cloneflags: syscall.CLONE_NEWUTS |
 			syscall.CLONE_NEWPID |
 			syscall.CLONE_NEWNS |
-			syscall.CLONE_NEWIPC |
-			syscall.CLONE_NEWNET,
+			syscall.CLONE_NEWIPC,
 	}
 	// TODO: Add the syscall.CLONE_NEWUSER when user support is added.
+	// TODO: Add the syscall syscall.CLONE_NEWNET when networking namespace support is added.
 }
 
 func applyChroot(imageConfig ImageConfig) {
