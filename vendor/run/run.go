@@ -56,19 +56,19 @@ func applyChroot(imageConfig ImageConfig) {
 			mountFlag = syscall.MS_BIND
 			sourceFile, _ := os.Stat(mount.Source)
 			if sourceFile.IsDir() {
-				os.MkdirAll(fmt.Sprintf("rootfs%s", mount.Destination), os.ModePerm)
+				os.MkdirAll("rootfs"+mount.Destination, os.ModePerm)
 			} else {
 				filenameSplit := strings.Split(mount.Destination, "/")
 				filenameSplit = filenameSplit[:len(filenameSplit)-1]
-				os.MkdirAll(fmt.Sprintf("rootfs%s", strings.Join(filenameSplit, "/")), os.ModePerm)
-				os.Create(fmt.Sprintf("rootfs%s", mount.Destination))
+				os.MkdirAll("rootfs/"+strings.Join(filenameSplit, "/"), os.ModePerm)
+				os.Create("rootfs" + mount.Destination)
 			}
 		} else {
 			mountFlag = 0
 		}
-		err := syscall.Mount(mount.Source, fmt.Sprintf("rootfs%s", mount.Destination), mount.Type, mountFlag, strings.Join(mount.Options, ","))
+		err := syscall.Mount(mount.Source, "rootfs"+mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
 		if err != nil {
-			log.Print(("Failed to mount " + mount.Source + " to " + mount.Destination + " due to " + err.Error()))
+			log.Print(fmt.Sprintf("Failed to mount %s to %s due to %s", mount.Source, mount.Destination, err.Error()))
 		}
 		// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
 	}
