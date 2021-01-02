@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	v1 "github.com/opencontainers/image-spec/specs-go/v1"
 	"github.com/opencontainers/umoci"
 	"github.com/opencontainers/umoci/oci/cas/dir"
 	"github.com/opencontainers/umoci/oci/casext"
@@ -18,12 +19,12 @@ func UnpackImage(imagesDir string, containersDir string, containerName string, i
 		log.Fatal(err)
 	}
 	engineExt := casext.NewEngine(engine)
-	var unpackOptions layer.UnpackOptions
+	var mapOptions layer.MapOptions
 	var meta umoci.Meta
 	meta.Version = umoci.MetaVersion
 	meta.MapOptions.Rootless = true
 	// TODO: Check why adding rootless doesn't work.
-	unpackOptions.MapOptions = meta.MapOptions
+	mapOptions = meta.MapOptions
 	fullContainerPath := fmt.Sprintf("%s/%s", containersDir, containerName)
-	return umoci.Unpack(engineExt, imageTag, fullContainerPath, unpackOptions)
+	return umoci.Unpack(engineExt, imageTag, fullContainerPath, mapOptions, nil, v1.Descriptor{})
 }

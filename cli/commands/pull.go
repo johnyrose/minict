@@ -2,7 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"oci"
+
+	"github.com/Ripolak/minict/oci"
 
 	"github.com/apex/log"
 )

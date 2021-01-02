@@ -2,9 +2,11 @@ package commands
 
 import (
 	"fmt"
-	"oci"
-	"run"
 	"strings"
+
+	"github.com/Ripolak/minict/oci"
+
+	"github.com/Ripolak/minict/run"
 
 	"github.com/apex/log"
 )

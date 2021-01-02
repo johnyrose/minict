@@ -1,10 +1,11 @@
 package cli
 
 import (
-	"cli/commands"
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/Ripolak/minict/cli/commands"
 
 	"github.com/apex/log"
 	"github.com/urfave/cli"
@@ -22,7 +23,7 @@ func GetCli() *cli.App {
 		Name:      "minict",
 		Usage:     "A minimal, easy-to-understand container runtime.",
 		UsageText: "minict <command> [command flags]",
-		Commands: []*cli.Command{
+		Commands: []cli.Command{
 			{
 				Name:  "pull",
 				Usage: "Pull an image from Dockerhub or a different container registry.",

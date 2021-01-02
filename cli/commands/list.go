@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"oci"
+
+	"github.com/Ripolak/minict/oci"
 )
 
 func ListContainers(containersDir string) []string {

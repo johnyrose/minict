@@ -3,7 +3,8 @@ package commands
 import (
 	"fmt"
 	"log"
-	"run"
+
+	"github.com/Ripolak/minict/run"
 )
 
 func RemoveContainer(containersDir string, name string) {
