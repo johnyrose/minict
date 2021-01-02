@@ -50,20 +50,26 @@ func applyNamespaces(cmd *exec.Cmd) {
 }
 
 func applyChroot(imageConfig ImageConfig) {
-	syscall.Chroot("rootfs")
 	for _, mount := range imageConfig.MountsConfig {
 		var mountFlag uintptr
 		if mount.Type == "bind" {
 			mountFlag = syscall.MS_BIND
+			sourceFile, _ := os.Stat(mount.Source)
+			if sourceFile.IsDir() {
+				os.MkdirAll(fmt.Sprintf("rootfs%s", mount.Destination), os.ModePerm)
+			} else {
+				os.Create(fmt.Sprintf("rootfs%s", mount.Destination))
+			}
 		} else {
 			mountFlag = 0
 		}
-		err := syscall.Mount(mount.Source, mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
+		err := syscall.Mount(mount.Source, fmt.Sprintf("rootfs%s", mount.Destination), mount.Type, mountFlag, strings.Join(mount.Options, ","))
 		if err != nil {
 			log.Print(("Failed to mount " + mount.Source + " to " + mount.Destination + " due to " + err.Error()))
 		}
 		// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
 	}
+	syscall.Chroot("rootfs")
 	os.Chdir(imageConfig.ProcessConfig.Cwd)
 }
 
