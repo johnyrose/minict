@@ -1,20 +1,52 @@
 package main
 
 import (
-	"run"
+	"fmt"
+	"log"
+	"os"
 
 	_ "github.com/containers/image/docker"
 	_ "github.com/containers/image/oci/layout"
+	"github.com/urfave/cli"
 )
 
 func main() {
-	// _, err := oci.PullImage("/opt/fast_disk/Projects/mini-ct/images", "ubuntu:20.04")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// err = oci.UnpackImage("/opt/fast_disk/Projects/mini-ct/images", "/opt/fast_disk/Projects/mini-ct/containers", "ubuntu-test", "ubuntu", "20.04")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	run.RunContainer("/opt/fast_disk/Projects/mini-ct/images", "/opt/fast_disk/Projects/mini-ct/containers", "ubuntu-test", "ubuntu:20.04")
+	app := &cli.App{
+		Commands: []*cli.Command{
+			{
+				Name:  "pull",
+				Usage: "Pull an image from Dockerhub or a different container registry.",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "image",
+						Usage:    "The full image name",
+						Required: true,
+					},
+				},
+				Action: func(c *cli.Context) error {
+					fmt.Println("test pull " + c.String("image"))
+					return nil
+				},
+			},
+			{
+				Name:  "run",
+				Usage: "Run a container.",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:     "image",
+						Usage:    "The full image name",
+						Required: true,
+					},
+				},
+				Action: func(c *cli.Context) error {
+					fmt.Println("test run " + c.Args().First())
+					return nil
+				},
+			},
+		},
+	}
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
