@@ -85,7 +85,7 @@ func GetCli() *cli.App {
 				},
 				Action: func(c *cli.Context) error {
 					commands.RemoveContainer(config.ContainersDir, c.String("name"))
-					log.Info("Container removed successfully.")
+					log.Info("Container removed successfully. It can be stated again using the 'start' option.")
 					return nil
 				},
 			},
