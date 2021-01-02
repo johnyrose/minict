@@ -60,6 +60,9 @@ Minict runs OCI standard images and supports pulling images from existing regist
   sudo minict rm --name ubuntu-ctr
   ```
 
+## Running information
+ * Container management is entirely based on the filesystem, and no DBs or separate inventories are used.
+ * By default, minict will use the `/var/lib/minict` directory for everything that it stores on disk. 
 
 ## Important Notes & Disclaimers:
  * Since this is intended to be small and minimal project, only basic OCI settings are supported. Currently, minict supports the following features:
