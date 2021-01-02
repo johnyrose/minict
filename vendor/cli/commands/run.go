@@ -32,7 +32,7 @@ func parseImageName(name string) (string, string) {
 }
 
 func doesContainerExist(name string, containerDir string) bool {
-	for _, container := range listContainers(containerDir) {
+	for _, container := range ListContainers(containerDir) {
 		if name == container {
 			return true
 		}

@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func listContainers(containersDir string) []string {
+func ListContainers(containersDir string) []string {
 	files, err := ioutil.ReadDir(containersDir)
 	if err != nil {
 		log.Fatal(err)

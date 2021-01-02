@@ -2,6 +2,8 @@ package cli
 
 import (
 	"cli/commands"
+	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/urfave/cli"
@@ -50,6 +52,18 @@ func GetCli() *cli.App {
 				Action: func(c *cli.Context) error {
 					commands.Run(config.ImagesDir, config.ContainersDir, c.String("image"), c.String("name"))
 					return nil
+				},
+			},
+			{
+				Name:  "list-containers",
+				Usage: "List containers that are running or can be ran have been ran.",
+				Action: func(c *cli.Context) error {
+					containers := commands.ListContainers(config.ContainersDir)
+					b, err := json.MarshalIndent(containers, "", "	")
+					if err == nil {
+						fmt.Println(string(b))
+					}
+					return err
 				},
 			},
 		},
