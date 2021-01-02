@@ -23,7 +23,7 @@ func GetCli() *cli.App {
 		Name:      "minict",
 		Usage:     "A minimal, easy-to-understand container runtime.",
 		UsageText: "minict <command> [command flags]",
-		Commands: []*cli.Command{
+		Commands: []cli.Command{
 			{
 				Name:  "pull",
 				Usage: "Pull an image from Dockerhub or a different container registry.",

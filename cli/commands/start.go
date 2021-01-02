@@ -2,7 +2,8 @@ package commands
 
 import (
 	"fmt"
-	"run"
+
+	"github.com/Ripolak/minict/run"
 
 	"github.com/apex/log"
 )
