@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/apex/log"
@@ -46,6 +47,8 @@ func ParseImageName(imgName string, transportType string) (types.ImageReference,
 	if transport == nil {
 		log.Fatal("Failed to get image transport type.")
 	}
+	imgNameSplit := strings.Split(imgName, "/")
+	imgName = imgNameSplit[len(imgNameSplit)-1]
 	if transportType == "docker" {
 		imgName = fmt.Sprintf("//%s", imgName)
 	}
