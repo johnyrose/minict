@@ -2,12 +2,19 @@ package cli
 
 import (
 	"cli/commands"
+	"os"
 
 	"github.com/urfave/cli"
 )
 
+func initFolders(config AppConfig) {
+	os.MkdirAll(config.ImagesDir, os.ModePerm)
+	os.MkdirAll(config.ContainersDir, os.ModePerm)
+}
+
 func GetCli() *cli.App {
 	config := GetAppConfig()
+	initFolders(config)
 	app := &cli.App{
 		Commands: []*cli.Command{
 			{
