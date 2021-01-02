@@ -39,7 +39,7 @@ func PullImage(imagesDir string, image string) ([]byte, error) {
 	return copy.Image(ctx, policyContext, destRef, srcRef, &copy.Options{})
 }
 
-// ParseImageName converts a URL-like image name to a types.ImageReference. This function is taken from Skopeo.
+// ParseImageName converts a URL-like image name to a types.ImageReference.
 func ParseImageName(imgName string, transportType string) (types.ImageReference, error) {
 	transport := transports.Get(transportType)
 	if transport == nil {
@@ -52,7 +52,7 @@ func ParseImageName(imgName string, transportType string) (types.ImageReference,
 }
 
 func getPolicyContext() (*signature.PolicyContext, error) {
-	var policy *signature.Policy // This could be cached across calls in opts.
+	var policy *signature.Policy
 	var err error
 	policy = &signature.Policy{Default: []signature.PolicyRequirement{signature.NewPRInsecureAcceptAnything()}}
 	if err != nil {
