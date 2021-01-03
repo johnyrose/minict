@@ -37,7 +37,7 @@ Minict runs OCI standard images and supports pulling images from existing regist
   ```
   * Listing all images:
   ```bash
-  >>> sudo minictl list-images
+  >>> sudo minict list-images
 
   [
 	"alpine:latest",
@@ -46,7 +46,7 @@ Minict runs OCI standard images and supports pulling images from existing regist
   ```
   * Listing all containers:
   ```bash
-  >>> sudo minictl list-containers
+  >>> sudo minict list-containers
   
   [
 	"container1",
