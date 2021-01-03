@@ -74,7 +74,7 @@ Minict runs OCI standard images and supports pulling images from existing regist
    * Mounts - Partial support, some mounts won't work and you might see mounting error when starting containers, but the basic mounts that are required for most containers are supported.
    * Hostname
 * All other OCI settings are ignored.
-* Currently, containers do not start with a networking namespace. I intend to add it in the near future.
+* Containers do not start with a networking namespace at the moment. While it is possible to add and there are existing Go libraries and tools to help make that easier, it will cause running containers to not be reachable without implementing more features like port mapping between the host and the containers and more, which is beyond the scope I set for this project at the moment.
 * **Minict is in NO way meant to be used in production.** This is nothing more than a personal project and I take no responsibility for anything that using it might cause.
 * While I tested this on my personal system and tried my best to cleanup everything once a container is removed, note that it does setup namespaces and mounts on the system, so **for completely risk-free usage I'd suggest using it on a VM**.
 
