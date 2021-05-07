@@ -56,15 +56,8 @@ func applyChroot(imageConfig ImageConfig) {
 }
 
 func applyMounts(imageConfig ImageConfig) {
-	var mountFlag uintptr
 	for _, mount := range imageConfig.MountsConfig {
-		if mount.Type == "bind" {
-			prepareBindMount(mount)
-			mountFlag = syscall.MS_BIND
-		} else {
-			mountFlag = 0
-		}
-		err := syscall.Mount(mount.Source, "rootfs"+mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
+		err := performMount(mount)
 		if err != nil {
 			log.Print(fmt.Sprintf("Failed to mount %s to %s due to %s", mount.Source, mount.Destination, err.Error()))
 		}
