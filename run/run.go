@@ -15,6 +15,7 @@ func RunContainer(containersDir string, name string) error {
 	os.Chdir(containerDir)
 	cmd := buildCommand(imageConfig)
 	applyNamespaces(cmd)
+	applyMounts(imageConfig)
 	applyChroot(imageConfig)
 	applyUsers(imageConfig)
 	err := cmd.Run()
@@ -50,11 +51,16 @@ func applyNamespaces(cmd *exec.Cmd) {
 }
 
 func applyChroot(imageConfig ImageConfig) {
+	syscall.Chroot("rootfs")
+	os.Chdir(imageConfig.ProcessConfig.Cwd)
+}
+
+func applyMounts(imageConfig ImageConfig) {
+	var mountFlag uintptr
 	for _, mount := range imageConfig.MountsConfig {
-		var mountFlag uintptr
 		if mount.Type == "bind" {
-			mountFlag = syscall.MS_BIND
 			prepareBindMount(mount)
+			mountFlag = syscall.MS_BIND
 		} else {
 			mountFlag = 0
 		}
@@ -62,10 +68,7 @@ func applyChroot(imageConfig ImageConfig) {
 		if err != nil {
 			log.Print(fmt.Sprintf("Failed to mount %s to %s due to %s", mount.Source, mount.Destination, err.Error()))
 		}
-		// TODO: Implement more mount options and clean the code to not use if-else for every mount type.
 	}
-	syscall.Chroot("rootfs")
-	os.Chdir(imageConfig.ProcessConfig.Cwd)
 }
 
 func prepareBindMount(mount MountsConfig) {

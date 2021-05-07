@@ -19,6 +19,7 @@ require (
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/mtrmac/gpgme v0.1.2 // indirect
+	github.com/opencontainers/image-spec v1.0.1
 	github.com/opencontainers/umoci v0.4.6
 	github.com/simonz05/util v0.0.0-20170616082423-66cff7904715
 	github.com/ulikunitz/xz v0.5.9 // indirect
