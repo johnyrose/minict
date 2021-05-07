@@ -7,14 +7,21 @@ import (
 )
 
 func performMount(mount MountsConfig) error {
-	var mountFlag uintptr
 	if mount.Type == "bind" {
 		prepareBindMount(mount)
-		mountFlag = syscall.MS_BIND
-	} else {
-		mountFlag = 0
 	}
+	mountFlag := getMountFlag(mount)
 	return syscall.Mount(mount.Source, "rootfs"+mount.Destination, mount.Type, mountFlag, strings.Join(mount.Options, ","))
+}
+
+func getMountFlag(mount MountsConfig) uintptr {
+	if mount.Type == "bind" {
+		return syscall.MS_BIND
+	}
+	if mount.Type == "tmpfs" {
+		return syscall.MS_NOSUID
+	}
+	return 0
 }
 
 func prepareBindMount(mount MountsConfig) {
