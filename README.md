@@ -20,7 +20,7 @@ Minict runs OCI standard images and supports pulling images from existing regist
  * Run the `go get` command.
  * Run the `go build` command.
  * You should now have a `minict` executable in your directory. Run `chmod a+x minict` and it can now be used.
- * To use it from anywhere easily, move the `minict` executable to a directory that is in yout `PATH` variable. One such directory should be `/usr/bin`.
+ * To use it from anywhere easily, move the `minict` executable to a directory that is in your `PATH` variable. One such directory should be `/usr/bin`.
 
  ## Getting Started
   * Pulling an image:
