@@ -2,7 +2,7 @@
 
 Minict is a minimal container runtime written in Go. It was made mainly for learning purposes and is intended to be as simple as possible. 
 
-Its main intention is to be easily understandable to anyone who wishes to read it's code and see what goes into running containers in famous runtimes such as Containerd and full container-running platforms like Docker.
+Its main intention is to be easily understandable to anyone who wishes to read its code and see what goes into running containers in famous runtimes such as Containerd and full container-running platforms like Docker.
 
 Minict runs OCI standard images and supports pulling images from existing registries. 
 
